@@ -852,18 +852,6 @@ void oilSwitch()				        	// changes oilState for comparison when purging
 
 void homebutton()						// function that draws the home button
 {
-  // home icon (rotated right now)
-  //Tft.drawLine(219, 280, 200, 299, WHITE);
-  //Tft.drawLine(200, 300, 204, 304, WHITE);
-  //Tft.drawLine(203, 304, 200, 304, WHITE);
-  //Tft.drawLine(200, 305, 200, 307, WHITE);
-  //Tft.drawLine(200, 308, 208, 308, WHITE);
-  //Tft.drawLine(209, 309, 219, 319, WHITE);
-  //Tft.drawLine(219, 281, 219, 283, WHITE);
-  //Tft.drawLine(219, 316, 219, 318, WHITE);
-  //Tft.drawRectangle(219, 284, 21, 32, WHITE);
-  //Tft.drawRectangle(225, 295, 15, 10, WHITE);
-
   Tft.drawRectangle(203, 300, 32, 19, WHITE);
   Tft.drawRectangle(214, 304, 10, 15, WHITE);
   Tft.drawRectangle(207, 282, 4, 10, WHITE);
