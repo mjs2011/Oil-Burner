@@ -196,34 +196,10 @@ void loop()
   p.x = map(p.x, TS_MINX, TS_MAXX, 0, 240);
   p.y = map(p.y, TS_MINY, TS_MAXY, 0, 320);
 
-  int sensorValue = analogRead(A11);
-  float voltage = sensorValue * (5.0 / 1023.0);
-  float v6 = voltage * voltage * voltage * voltage * voltage * voltage;
-  float v5 = voltage * voltage * voltage * voltage * voltage;
-  float v4 = voltage * voltage * voltage * voltage;
-  float v3 = voltage * voltage * voltage;
-  float v2 = voltage * voltage;
-
-  temp = (-1.4591 * v6 + 21.784 * v5 - 125.74 * v4 + 350.06 * v3 - 473.05 * v2 + 216.06 * voltage + 267.96) * 0.93;
-  // polynomial approximation of signal voltages vs temperature of temp sender with experimentally determined correction factor of 0.93.
-  // see excel sheet for more info.       C:\Users\Max\Google Drive\Sync\Bub\WVO Controller\Oil Temp gage values
-  //float voltage, degreesC, degreesF;			// calculate temperature reading based on voltages
-  //voltage = getVoltage(temperaturePin);
-  //degreesC = (voltage - 0.5) * 100.0;
-  //degreesF = degreesC * (9.0/5.0) + 32.0;
-  // subtract the last reading:
-  total = total - readings[index];              // read from the sensor:
-  readings[index] = temp;                       // add the reading to the total:
-  total = total + readings[index];              // advance to the next position in the array:
-  index = index + 1;                            // if we're at the end of the array...
-  if (index >= numReadings)                     // ...wrap around to the beginning:
-    index = 0;                                  // calculate the average:
-  average = total / numReadings;
-
+  temperature();
   screen_brightness();
   fuelGage();
   fuelPressure();
-
 
   if (page == 0 && purgeState == 0)
   {
@@ -1126,6 +1102,32 @@ void screen_brightness()
   analogWrite(backlightPin, backlightValue);
 }
 
+void temperature()
+{
+  int sensorValue = analogRead(A11);
+  float voltage = sensorValue * (5.0 / 1023.0);
+  float v6 = voltage * voltage * voltage * voltage * voltage * voltage;
+  float v5 = voltage * voltage * voltage * voltage * voltage;
+  float v4 = voltage * voltage * voltage * voltage;
+  float v3 = voltage * voltage * voltage;
+  float v2 = voltage * voltage;
+
+  temp = (-1.4591 * v6 + 21.784 * v5 - 125.74 * v4 + 350.06 * v3 - 473.05 * v2 + 216.06 * voltage + 267.96) * 0.93;
+  // polynomial approximation of signal voltages vs temperature of temp sender with experimentally determined correction factor of 0.93.
+  // see excel sheet for more info.       C:\Users\Max\Google Drive\Sync\Bub\WVO Controller\Oil Temp gage values
+  //float voltage, degreesC, degreesF;      // calculate temperature reading based on voltages
+  //voltage = getVoltage(temperaturePin);
+  //degreesC = (voltage - 0.5) * 100.0;
+  //degreesF = degreesC * (9.0/5.0) + 32.0;
+  // subtract the last reading:
+  total = total - readings[index];              // read from the sensor:
+  readings[index] = temp;                       // add the reading to the total:
+  total = total + readings[index];              // advance to the next position in the array:
+  index = index + 1;                            // if we're at the end of the array...
+  if (index >= numReadings)                     // ...wrap around to the beginning:
+    index = 0;                                  // calculate the average:
+  average = total / numReadings;
+}
 
 //float getVoltage(int pin)				        // function that reads the value of the temperature pin and returns it
 // to be converted into a temperature value.
