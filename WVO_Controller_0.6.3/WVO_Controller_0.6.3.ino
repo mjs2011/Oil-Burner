@@ -82,8 +82,8 @@ double oldTheta;
 boolean circle = 0;
 
 const int buzzerPin = 22;
-const int returnValve = 24;      			// red LED
-const int supplyValve = 26;    				// green LED, will also power bypass valve and Fuel pump Relay
+const int returnValve = 24;      			// digital pin controlling the return valve mosfet
+const int supplyValve = 26;    				// digital pin controlling the supply valve mosfet, will also power bypass valve and Fuel pump Relay
 int page = 0;                  				// the page to prevent button pushes from working on pages where the button doesnt exist
                                       // homescreen = 0, settings = 2, purgeSetTime = 3, tempSet = 4
 
