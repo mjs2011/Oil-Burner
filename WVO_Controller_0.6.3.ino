@@ -63,12 +63,12 @@ Changelog:
 #define CLK   32
 Adafruit_MAX31855 thermocouple(CLK, CS, DO);
 
-const int numReadings = 10.00;				// number of readings to be taken for temperature average
-int readings[numReadings];  				// the readings from the analog input
-int index = 0;              				// the index of the current reading
-int total = 0;              				// the running total
-int average = 0;            				// the average of temperature readings
-int oldaverage = 0;          				// the old average to overwrite on the scree
+const int numReadings = 10.00;				// number of readings to be taken for fuel temperature average
+int readings[numReadings];  				  // the readings from the analog input
+int index = 0;              				  // the index of the current reading
+int total = 0;              				  // the running total
+int average = 0;            				  // the average of temperature readings
+int oldaverage = 0;          				  // the old average to overwrite on the scree
 int temperaturePin = A11;			        // temperature input pin to read temperature of oil temperature
 int temp = 0;
 int EGT = 0;
@@ -85,22 +85,21 @@ const int buzzerPin = 22;
 const int returnValve = 24;      			// red LED
 const int supplyValve = 26;    				// green LED, will also power bypass valve and Fuel pump Relay
 int page = 0;                  				// the page to prevent button pushes from working on pages where the button doesnt exist
-// homescreen = 0, settings = 2, purgeSetTime = 3, tempSet = 4
-int number = 0;						// unknown variable.....
+                                      // homescreen = 0, settings = 2, purgeSetTime = 3, tempSet = 4
 
-int purgeTime;					// purge time of the of valves in seconds. Set to 5 now for ease of troubleshooting.
-// minimum in purgeSetTime menu is 30. this value will be changed for final code.
-unsigned long Timer = 0;				// unkown variable.....
-boolean autoState;    				// whether the controller is running in auto or manual mode. Auto = 1, manual = 0.
-boolean oilState = 0;     				// whether the controller is switched to oil or not. Oil = 1, diesel = 0.
-boolean tempState = 0;     				// whether the temp is above or below set temp. Above setTemp = 1, below setTemp = 0.
-boolean oldtempState = 0;				// used to get into if statements only when tempState has just switched and oldTempState is different.
-boolean purgeState = 0;					// whether or not purgeTimer is running. Purging = 1, not purging = 0.
-int setTemp;       				// Automatic oil switch and purge temperature threshold in degrees Farenheit
-long previousMillis = 0;				// time in millis when purge timer function begins
+int purgeTime;					              // purge time of the of valves in seconds. Set to 5 now for ease of troubleshooting.
+                                      // minimum in purgeSetTime menu is 30. this value will be changed for final code.
+unsigned long Timer = 0;				      // unkown variable.....
+boolean autoState;    				        // whether the controller is running in auto or manual mode. Auto = 1, manual = 0.
+boolean oilState = 0;     				    // whether the controller is switched to oil or not. Oil = 1, diesel = 0.
+boolean tempState = 0;     				    // whether the temp is above or below set temp. Above setTemp = 1, below setTemp = 0.
+boolean oldtempState = 0;				      // used to get into if statements only when tempState has just switched and oldTempState is different.
+boolean purgeState = 0;					      // whether or not purgeTimer is running. Purging = 1, not purging = 0.
+int setTemp;       				            // Automatic oil switch and purge temperature threshold in degrees Farenheit
+long previousMillis = 0;				      // time in millis when purge timer function begins
 unsigned long currentMillis = 0;			// current time in millis compared to previousMillis to determine when purgeTime is met
-int countdown = 0;					// purgeTime left in seconds, to be displayed during purge process
-int oldCountdown = 0;					// old purgeTime value , compared to countdown to determine when to overwrite countdown value.
+int countdown = 0;					          // purgeTime left in seconds, to be displayed during purge process
+int oldCountdown = 0;					        // old purgeTime value , compared to countdown to determine when to overwrite countdown value.
 
 int backlightPin = 7;
 float backlightValue;
@@ -111,10 +110,6 @@ int backlightVal = 255;
 int oldBacklightVal;
 int oldLightLevel;
 int lightLevel;
-
-//const int returnCheckPin = 34;                          // analog pin to check state of return valve with the use of a reed switch to check for magnetic field
-//const int bypassCheckPin = 36;                          // analog pin to check state of bypass valve with the use of a reed switch to check for magnetic field
-//const int supplyCheckPin = 38;                          // analog pin to check state of supply valve with the use of a reed switch to check for magnetic field
 
 boolean returnState = 0;
 boolean oldReturnState = 0;
@@ -128,19 +123,19 @@ int purgeTimeAddress = 1;
 int tempSetPointAddress = 2;
 int brightnessAddress = 3;
 
-int fuelLevel;                                          // value from 0 to 100 equating to the fuel level
-float fuelLevelVal;                                     // analog value from 728 to 254, read from the fuel level voltage divider;
-int xLength;                                            // length of bar in fuel level bar graph
+int fuelLevel;                            // value from 0 to 100 equating to the fuel level
+float fuelLevelVal;                       // analog value from 728 to 254, read from the fuel level voltage divider;
+int xLength;                              // length of bar in fuel level bar graph
 int oldxLength;
-int fuelLevelPin = A15;                                    // pin that is reading the voltage of the voltage divider for the fuel sender
+int fuelLevelPin = A15;                   // pin that is reading the voltage of the voltage divider for the fuel sender
 
-int readingP[numReadings];          // the readings from the analog input
-int indexP = 0;                      // the index of the current reading
-int sumP = 0;                      // the running total
+int readingP[numReadings];                // the readings from the analog input
+int indexP = 0;                           // the index of the current reading
+int sumP = 0;                             // the running total
 int psi = 0;
-int pressure = 0;                   // current fuel pressure
-int oldpressure = 0;                // old fuel pressure
-int pressurePin = A14;              // analog pressure pin
+int pressure = 0;                         // current fuel pressure
+int oldpressure = 0;                      // old fuel pressure
+int pressurePin = A14;                    // analog pressure pin
 double pressureVoltage;
 
 TouchScreen ts = TouchScreen(XP, YP, XM, YM);	        // values for coordinate system inputs on touchscreen.
@@ -148,26 +143,17 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM);	        // values for coordinate s
 void setup()
 {
   dayLightVal = analogRead(A10);
-  //Serial.println(dayLightVal);
-  //backlightPerc = (0.0000003*(dayLightVal*dayLightVal*dayLightVal))-(0.0006*(dayLightVal*dayLightVal))+(0.397*dayLightVal);
-  //Serial.println(backlightPerc);
   backlightValue = 0.2138*dayLightVal + 20.5;
-  //Serial.println(backlightValue);
-  //backlightValue = ((backlightPercent*backlightPercent*backlightPercent)/3937) + 1.5;
-  //backlightValue = (127 * backlightPercent) / 50 + 1;
   analogWrite(backlightPin, backlightValue);
-  //Serial.println(backlightValue);
 
   Tft.TFTinit();                                        // init TFT library
 
-  pinMode(24, OUTPUT);					// needed to set digital pin to high at 5v for switching MOSFET
-  pinMode(26, OUTPUT);					// needed to set digital pin to high at 5v for switching MOSFET
+  pinMode(24, OUTPUT);					                        // needed to set digital pin to high at 5v for switching MOSFET
+  pinMode(26, OUTPUT);					                        // needed to set digital pin to high at 5v for switching MOSFET
 
   Serial.begin(9600);
 
-  //Tft.fillRectangle(0, 0, 239, 319, WHITE);
-
-  Tft.drawRectangle(10, 20, 220, 280, GREEN); 	    // (X-coord start, Y-coord start, X length, y length, color)
+  Tft.drawRectangle(10, 20, 220, 280, GREEN); 	        // (X-coord start, Y-coord start, X length, y length, color)
   Tft.drawString("OIL", 73, 38, 5, GREEN);
   Tft.drawString("OIL", 75, 40, 5, BLUE);
   delay(500);
@@ -189,12 +175,12 @@ void setup()
   purgeTime = EEPROM.read(purgeTimeAddress);
   setTemp = EEPROM.read(tempSetPointAddress);
 
-  delay(3000);						// display boot screen for set time in millis
-  Tft.fillScreen();					// clear display
+  delay(3000);						                        // display boot screen for set time in millis
+  Tft.fillScreen();					                      // clear display
 
-  homescreen();						// draw homescreen once boot screen is cleared
+  homescreen();						                        // draw homescreen once boot screen is cleared
 
-  Point p = ts.getPoint();				// setup point to read touch values
+  Point p = ts.getPoint();				                // setup point to read touch values
   p.x = 0;
   p.y = 0;
 }
@@ -211,9 +197,6 @@ void loop()
   Point p = ts.getPoint();
   p.x = map(p.x, TS_MINX, TS_MAXX, 0, 240);
   p.y = map(p.y, TS_MINY, TS_MAXY, 0, 320);
-
-  Serial.print("oil state ");
-  Serial.println(oilState);
   
   dayLightVal = analogRead(A10);
   //Serial.println(dayLightVal);
@@ -242,18 +225,12 @@ void loop()
   //degreesC = (voltage - 0.5) * 100.0;
   //degreesF = degreesC * (9.0/5.0) + 32.0;
   // subtract the last reading:
-  total = total - readings[index];
-  // read from the sensor:
-  readings[index] = temp;
-  // add the reading to the total:
-  total = total + readings[index];
-  // advance to the next position in the array:
-  index = index + 1;
-  // if we're at the end of the array...
-  if (index >= numReadings)
-    // ...wrap around to the beginning:
-    index = 0;
-  // calculate the average:
+  total = total - readings[index];              // read from the sensor:
+  readings[index] = temp;                       // add the reading to the total:
+  total = total + readings[index];              // advance to the next position in the array:
+  index = index + 1;                            // if we're at the end of the array...
+  if (index >= numReadings)                     // ...wrap around to the beginning:
+    index = 0;                                  // calculate the average:
   average = total / numReadings;
 
 fuelGage();
