@@ -1068,18 +1068,12 @@ void fuelPressure()
   pressureVoltage = analogRead(pressurePin)*5.0/1023.0;
   psi = 7.5*pressureVoltage - 3.075;
   
-  sumP = sumP - readingP[indexP];
-  // read from the sensor:
-  readingP[indexP] = psi;
-  // add the reading to the total:
-  sumP = sumP + readingP[indexP];
-  // advance to the next position in the array:
-  indexP = indexP + 1;
-  // if we're at the end of the array...
-  if (indexP >= numReadings)
-    // ...wrap around to the beginning:
-    indexP = 0;
-  // calculate the average:
+  sumP = sumP - readingP[indexP];           // read from the sensor:
+  readingP[indexP] = psi;                   // add the reading to the total:
+  sumP = sumP + readingP[indexP];           // advance to the next position in the array:
+  indexP = indexP + 1;                      // if we're at the end of the array...
+  if (indexP >= numReadings)                // ...wrap around to the beginning:
+    indexP = 0;                             // calculate the average:
   pressure = sumP / numReadings;
 }
 
@@ -1123,12 +1117,6 @@ void temperature()
     index = 0;                                  // calculate the average:
   average = total / numReadings;
 }
-
-//float getVoltage(int pin)				        // function that reads the value of the temperature pin and returns it
-// to be converted into a temperature value.
-//{
-//return(analogRead(pin)*0.004882814);
-//}
 
 /*
 ***********************************************************************************************************************************************
