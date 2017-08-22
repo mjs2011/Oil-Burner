@@ -142,9 +142,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM);	        // values for coordinate s
 
 void setup()
 {
-  dayLightVal = analogRead(A10);
-  backlightValue = 0.2138*dayLightVal + 20.5;
-  analogWrite(backlightPin, backlightValue);
+  screen_brightness();
 
   Tft.TFTinit();                                        // init TFT library
 
@@ -197,17 +195,6 @@ void loop()
   Point p = ts.getPoint();
   p.x = map(p.x, TS_MINX, TS_MAXX, 0, 240);
   p.y = map(p.y, TS_MINY, TS_MAXY, 0, 320);
-  
-  dayLightVal = analogRead(A10);
-  //Serial.println(dayLightVal);
-  //backlightPerc = (0.0000003*(dayLightVal*dayLightVal*dayLightVal))-(0.0006*(dayLightVal*dayLightVal))+(0.397*dayLightVal);
-  //Serial.println(backlightPerc);
-  backlightValue = 0.2138*dayLightVal + 20.5;
-  //Serial.println(backlightValue);
-  //backlightValue = ((backlightPercent*backlightPercent*backlightPercent)/3937) + 1.5;
-  //backlightValue = (127 * backlightPercent) / 50 + 1;
-  analogWrite(backlightPin, backlightValue);
-  //Serial.println(backlightValue);
 
   int sensorValue = analogRead(A11);
   float voltage = sensorValue * (5.0 / 1023.0);
@@ -233,8 +220,9 @@ void loop()
     index = 0;                                  // calculate the average:
   average = total / numReadings;
 
-fuelGage();
-fuelPressure();
+  screen_brightness();
+  fuelGage();
+  fuelPressure();
 
 
   if (page == 0 && purgeState == 0)
@@ -1117,6 +1105,25 @@ void fuelPressure()
     indexP = 0;
   // calculate the average:
   pressure = sumP / numReadings;
+}
+
+void screen_brightness()
+{
+  /*
+   * Below is old code for the backlight brightness when the manual setting was still used, before upgrading to the auto brightness 
+   * function with the photo-diode
+  Serial.println(dayLightVal);
+  backlightPerc = (0.0000003*(dayLightVal*dayLightVal*dayLightVal))-(0.0006*(dayLightVal*dayLightVal))+(0.397*dayLightVal);
+  Serial.println(backlightPerc);
+  Serial.println(backlightValue);
+  backlightValue = ((backlightPercent*backlightPercent*backlightPercent)/3937) + 1.5;
+  backlightValue = (127 * backlightPercent) / 50 + 1;
+  analogWrite(backlightPin, backlightValue);
+  */
+
+  dayLightVal = analogRead(A10);
+  backlightValue = 0.2138*dayLightVal + 20.5;
+  analogWrite(backlightPin, backlightValue);
 }
 
 
