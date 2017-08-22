@@ -1115,11 +1115,6 @@ void temperature()
   temp = (-1.4591 * v6 + 21.784 * v5 - 125.74 * v4 + 350.06 * v3 - 473.05 * v2 + 216.06 * voltage + 267.96) * 0.93;
   // polynomial approximation of signal voltages vs temperature of temp sender with experimentally determined correction factor of 0.93.
   // see excel sheet for more info.       C:\Users\Max\Google Drive\Sync\Bub\WVO Controller\Oil Temp gage values
-  //float voltage, degreesC, degreesF;      // calculate temperature reading based on voltages
-  //voltage = getVoltage(temperaturePin);
-  //degreesC = (voltage - 0.5) * 100.0;
-  //degreesF = degreesC * (9.0/5.0) + 32.0;
-  // subtract the last reading:
   total = total - readings[index];              // read from the sensor:
   readings[index] = temp;                       // add the reading to the total:
   total = total + readings[index];              // advance to the next position in the array:
