@@ -292,22 +292,22 @@ void loop()
     currentMillis = millis();
     //Serial.println(previousMillis);
     //Serial.println(currentMillis);
-    countdown = (purgeTime - (currentMillis - previousMillis) / 1000); 		// if time since purge started is less than purgeSetTime, keep running purge
-    if (countdown != oldCountdown)						// if old and new countdown values are different, write countdown to screen
+    countdown = (purgeTime - (currentMillis - previousMillis) / 1000);     // if time since purge started is less than purgeSetTime, keep running purge
+    if (countdown != oldCountdown)            // if old and new countdown values are different, write countdown to screen
     {
-      if (countdown >= 10)							// if countdown is < 10, center countdown value on screen
+      if (countdown >= 10)              // if countdown is < 10, center countdown value on screen
       {
         Tft.fillRectangle(90, 140, 70, 40, BLACK);
         Tft.drawNumber(countdown, 90, 140, 5, WHITE);
       }
-      else									// otherwise, countdown is greater than 9, and countdown is centered
+      else                  // otherwise, countdown is greater than 9, and countdown is centered
       {
         Tft.fillRectangle(90, 140, 60, 40, BLACK);
         Tft.drawNumber(countdown, 100, 140, 5, WHITE);
       }
     }
     oldCountdown = countdown;
-    if ((currentMillis - previousMillis > purgeTime * 1000UL))		// if the purge time has ran longer than purgeSetTime,
+    if ((currentMillis - previousMillis > purgeTime * 1000UL))    // if the purge time has ran longer than purgeSetTime,
       // run returnOff which will turn off the Return valve
     {
       p.x = 0;
