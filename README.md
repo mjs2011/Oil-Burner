@@ -1,5 +1,6 @@
 # Oil-Burner V0.6.3
-By Max Sauer
+# By Max Sauer
+
 Code in Work
 
 	This is the code for the WVO Controller development for my pickup. It is intended
@@ -55,6 +56,7 @@ Code in Work
   	0.6.2   -   8/1/2016    -   Bug Fixes which causes fuel gage lines not to display when reloading homescreen
                           -   Added a Cancel Button to the Purging Page, which allows the purge sequence to be cancelled in the event of an accidental Purge
 			  
-  	0.6.3   -   8/21/2017   -   Added Fuel Pressure to display. This utilizes a 3 wire fuel pressure sender. More info at https://www.amazon.com/gp/product/B00RCPDE40/ref=oh_aui_search_detailpage?ie=UTF8&psc=1
+  	0.6.3   -   8/21/2017   -   Added Fuel Pressure to display. This utilizes a 3 wire fuel pressure sender. More info at 	
+	https://www.amazon.com/gp/product/B00RCPDE40/ref=oh_aui_search_detailpage?ie=UTF8&psc=1
                           -   fixed bug causing cancel button not to revert back to oil
                           -   added alarm for fuel pressure when on oil if pressure falls below 6 psi, also added color to fuel pressure indicator on screen 
