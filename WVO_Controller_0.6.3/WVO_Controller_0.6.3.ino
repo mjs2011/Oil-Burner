@@ -228,55 +228,6 @@ void loop()
       delay(250);
     }
 
-    if (page == 0)
-    {
-      /*
-      returnState = digitalRead(returnCheckPin);
-      bypassState = digitalRead(bypassCheckPin);
-      supplyState = digitalRead(supplyCheckPin);
-
-      if (returnState != oldReturnState)
-      {
-        if (returnState == LOW)
-        {
-          Tft.fillCircle(200, 200, 14, RED);
-        }
-        else
-        {
-          Tft.fillCircle(200, 200, 14, BLACK);
-        }
-      }
-
-      if (bypassState != oldBypassState)
-      {
-        if (bypassState == LOW)
-        {
-          Tft.fillCircle(120, 200, 14, RED);
-        }
-        else
-        {
-          Tft.fillCircle(120, 200, 14, BLACK);
-        }
-      }
-
-      if (supplyState != oldSupplyState)
-      {
-        if (supplyState == LOW)
-        {
-          Tft.fillCircle(40, 200, 14, RED);
-        }
-        else
-        {
-          Tft.fillCircle(40, 200, 14, BLACK);
-        }
-      }
-
-      oldReturnState = returnState;
-      oldBypassState = bypassState;
-      oldSupplyState = supplyState;
-      */
-    }
-
     if (average != oldaverage)
     {
       Tft.drawString("FUEL TEMP", 0, 120, 3, WHITE);
@@ -334,7 +285,6 @@ void loop()
       //Tft.drawNumber(average,180,150,3,YELLOW);       // write new average oil temperature
       oldpressure = pressure;
     }
-
   }
 
   if (purgeState == 1)						// display purge timer on screen if controller is in purge mode
@@ -725,7 +675,6 @@ void loop()
       }
     }
   }
-
 }
 
 /*
@@ -819,7 +768,7 @@ void homescreen()						// function that draws homescreen buttons and info
     oldaverage = average;
     oldpressure = pressure;
   }
-//
+
     Tft.drawString("TANK", 0, 210, 3, WHITE);
     Tft.fillRectangle(130,208,106,26,BLUE);
     if (xLength > 100)
